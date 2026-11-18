@@ -52,6 +52,55 @@
     });
   }
 
+  /* ---------- menu de passeios na navbar ---------- */
+  var navDd = document.querySelector('[data-nav-dd]');
+  if (navDd) {
+    var navDdToggle = navDd.querySelector('.nav-dd-toggle');
+
+    function setNavDd(open) {
+      navDd.classList.toggle('is-open', open);
+      navDdToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    }
+
+    var hoverSuppressed = false;
+
+    navDdToggle.addEventListener('click', function () {
+      var open = !navDd.classList.contains('is-open');
+      hoverSuppressed = !open;
+      setNavDd(open);
+    });
+
+    navDd.addEventListener('click', function (e) {
+      if (e.target.closest && e.target.closest('a')) setNavDd(false);
+    });
+
+    document.addEventListener('click', function (e) {
+      if (!navDd.contains(e.target)) setNavDd(false);
+    });
+
+    var canHover = window.matchMedia('(hover: hover)').matches;
+    navDd.addEventListener('mouseenter', function () {
+      if (canHover && !hoverSuppressed) setNavDd(true);
+    });
+    navDd.addEventListener('mouseleave', function () {
+      if (!canHover) return;
+      hoverSuppressed = false;
+      var active = document.activeElement;
+      if (!active || active === navDdToggle || !navDd.contains(active)) setNavDd(false);
+    });
+
+    navDd.addEventListener('focusout', function (e) {
+      if (e.relatedTarget && !navDd.contains(e.relatedTarget)) setNavDd(false);
+    });
+
+    window.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && navDd.classList.contains('is-open')) {
+        setNavDd(false);
+        navDdToggle.focus();
+      }
+    });
+  }
+
   /* ---------- reveal no scroll ---------- */
   var revealables = document.querySelectorAll('.reveal');
   if (reduceMotion || !('IntersectionObserver' in window)) {

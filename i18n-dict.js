@@ -914,6 +914,7 @@ window.BT_DICT = {
 (function () {
   var extra = {
     pt: {
+      "nav.toursAll": "Todos os passeios",
       "tour.more": "Ver detalhes",
       "detail.eyebrow": "Detalhes do passeio",
       "detail.included": "O que está incluído",
@@ -937,6 +938,7 @@ window.BT_DICT = {
       "tag.family": "Ambiente familiar"
     },
     en: {
+      "nav.toursAll": "All tours",
       "tour.more": "See details",
       "detail.eyebrow": "Tour details",
       "detail.included": "What is included",
@@ -960,6 +962,7 @@ window.BT_DICT = {
       "tag.family": "Family friendly"
     },
     es: {
+      "nav.toursAll": "Todas las excursiones",
       "tour.more": "Ver detalles",
       "detail.eyebrow": "Detalles de la excursión",
       "detail.included": "Qué incluye",
@@ -983,6 +986,7 @@ window.BT_DICT = {
       "tag.family": "Ambiente familiar"
     },
     fr: {
+      "nav.toursAll": "Toutes les excursions",
       "tour.more": "Voir les détails",
       "detail.eyebrow": "Détails de l'excursion",
       "detail.included": "Ce qui est inclus",
@@ -1006,6 +1010,7 @@ window.BT_DICT = {
       "tag.family": "Idéal en famille"
     },
     it: {
+      "nav.toursAll": "Tutte le escursioni",
       "tour.more": "Vedi dettagli",
       "detail.eyebrow": "Dettagli del tour",
       "detail.included": "Cosa è incluso",
@@ -1029,6 +1034,7 @@ window.BT_DICT = {
       "tag.family": "Adatto alle famiglie"
     },
     he: {
+      "nav.toursAll": "כל הטיולים",
       "tour.more": "לפרטים",
       "detail.eyebrow": "פרטי הטיול",
       "detail.included": "מה כלול",

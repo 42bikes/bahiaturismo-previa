@@ -106,6 +106,43 @@ ul,ol{margin:0;padding:0;list-style:none}
 }
 .main-nav a:hover{border-bottom-color:currentColor}
 
+/* ---------- menu de passeios na navbar ---------- */
+
+.nav-dd{position:relative}
+.nav-dd-toggle{
+  display:inline-flex;align-items:center;gap:6px;
+  background:none;border:0;border-bottom:1px solid transparent;padding:6px 0;margin:0;
+  color:inherit;font-family:var(--sans);cursor:pointer;
+  font-size:12px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;
+}
+.nav-dd-toggle:hover{border-bottom-color:currentColor}
+.nav-dd-caret{width:9px;height:6px;flex-shrink:0;transition:transform .25s ease}
+.nav-dd.is-open .nav-dd-caret{transform:rotate(180deg)}
+
+.nav-dd-menu{display:none;position:absolute;top:calc(100% + 16px);left:50%;transform:translateX(-50%);z-index:60}
+.nav-dd-menu::before{content:"";position:absolute;left:0;right:0;top:-18px;height:18px}
+.nav-dd.is-open .nav-dd-menu{display:block}
+
+.nav-dd-menu ul{
+  list-style:none;margin:0;padding:16px 22px;
+  display:grid;grid-template-columns:1fr 1fr;gap:1px 28px;
+  min-width:460px;
+  background:var(--paper);border:1px solid var(--sand);
+  box-shadow:0 26px 60px -34px rgba(14,34,30,.55);
+}
+.main-nav .nav-dd-menu a{
+  display:block;padding:8px 0;border-bottom:0;
+  font-size:12.5px;font-weight:500;letter-spacing:.02em;text-transform:none;
+  color:var(--ink-2);text-decoration:none;white-space:nowrap;
+  transition:color .2s ease;
+}
+.main-nav .nav-dd-menu a:hover{color:var(--sea)}
+.main-nav .nav-dd-menu .nav-dd-all{
+  color:var(--ink);font-weight:600;
+  border-bottom:1px solid var(--sand);margin-bottom:5px;padding-bottom:10px;
+}
+html[dir="rtl"] .nav-dd-menu ul{text-align:right}
+
 .header-actions{display:flex;align-items:center;gap:16px}
 .phone{font-size:13px;font-weight:500;text-decoration:none;letter-spacing:.02em;white-space:nowrap}
 .phone:hover{color:var(--sea)}
@@ -133,6 +170,22 @@ ul,ol{margin:0;padding:0;list-style:none}
 }
 .mobile-nav .btn{font-family:var(--sans);font-size:12px;border-bottom:0;margin-top:20px}
 .mobile-nav .mobile-phone{font-family:var(--sans);font-size:14px;letter-spacing:.04em;border-bottom:0;color:var(--ink-2)}
+
+.mobile-tours{border-bottom:1px solid var(--sand)}
+.mobile-tours summary{
+  display:flex;align-items:center;justify-content:space-between;
+  font-family:var(--display);font-size:22px;font-weight:400;line-height:1.6;
+  padding:6px 0;cursor:pointer;list-style:none;
+}
+.mobile-tours summary::-webkit-details-marker{display:none}
+.mobile-tours summary::after{content:"+";font-family:var(--sans);font-size:18px;color:var(--ink-2)}
+.mobile-tours[open] summary::after{content:"–"}
+.mobile-tours ul{list-style:none;margin:2px 0 14px;padding:0}
+.mobile-nav .mobile-tours ul a{
+  display:block;font-family:var(--sans);font-size:15px;font-weight:500;line-height:1.5;
+  padding:9px 0;border-bottom:0;color:var(--ink-2);
+}
+.mobile-nav .mobile-tours ul a:hover{color:var(--sea)}
 
 /* ---------- hero ---------- */
 

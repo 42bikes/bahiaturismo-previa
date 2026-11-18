@@ -55,6 +55,22 @@ python ../../../clone-kit/scripts/verify.py http://127.0.0.1:4394/ --out ../_wor
   hero (o único popup agora é o de idioma, uma vez por visitante), escala
   tipográfica consistente e identidade dourada da marca aplicada.
 
+## Menu "Passeios" na navbar
+
+O site atual do cliente abre os passeios a partir da navbar; a prévia também. O item
+**Passeios** do header virou um menu com os 11 passeios do catálogo, cada um abrindo
+a ficha completa (painel modal) direto dali — sem passar pela grade. O primeiro item,
+"Todos os passeios", leva à secção. No mobile o mesmo menu aparece como grupo
+expansível dentro do menu hambúrguer.
+
+- **Depende de JS**: a abertura é feita em `main.js`. Com JS desligado o header do
+desktop perde esse atalho, mas os passeios continuam na grade da página, no menu
+mobile e no rodapé.
+- **Abre no hover** (ponteiro fino) e no clique/teclado; fecha ao clicar fora, ao
+  apertar `Escape`, ao sair com o mouse e ao escolher um passeio.
+- **Nomes traduzidos** nos 6 idiomas pelas chaves `tour.*.title` já existentes; o
+  rótulo "Todos os passeios" usa `nav.toursAll`.
+
 ## Idiomas
 
 O site é multilíngue, sem build e sem dependências: os textos têm atributos
