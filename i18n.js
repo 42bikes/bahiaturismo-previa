@@ -368,7 +368,9 @@
       if (closeBtn) closeBtn.addEventListener("click", dismiss);
     }
 
-    if (!initial) open();
+    // link direto de uma ficha (#passeio-...): não cobre o painel com o pop-up de idioma
+    var tourLink = /^#passeio-/.test(window.location.hash || "");
+    if (!initial && !tourLink) open();
 
     window.setTimeout(function () {
       document.documentElement.classList.add("lang-ready");

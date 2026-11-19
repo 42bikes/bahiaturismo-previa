@@ -267,8 +267,35 @@
       if (tourNote) tourNote.hidden = !I18N || I18N.current() === 'pt';
     }
 
-    function openTour(key, trigger) {
+    /* endereço próprio de cada ficha: #passeio-morro, #passeio-boipeba... */
+    var HASH_PREFIX = '#passeio-';
+
+    function tourFromHash() {
+      var hash = window.location.hash || '';
+      if (hash.indexOf(HASH_PREFIX) !== 0) return null;
+      var key = hash.slice(HASH_PREFIX.length);
+      return tours[key] ? key : null;
+    }
+
+    function setTourHash(key) {
+      var hash = HASH_PREFIX + key;
+      if (window.location.hash === hash) return;
+      if (window.history.pushState) window.history.pushState({ tour: key }, '', hash);
+      else window.location.hash = hash;
+    }
+
+    function clearTourHash() {
+      if ((window.location.hash || '').indexOf(HASH_PREFIX) !== 0) return;
+      if (window.history.replaceState) {
+        window.history.replaceState(null, '', window.location.pathname + window.location.search);
+      } else {
+        window.location.hash = '';
+      }
+    }
+
+    function openTour(key, trigger, fromHash) {
       if (!tours[key]) return;
+      if (!fromHash) setTourHash(key);
       tourKey = key;
       tourOpener = trigger || null;
       renderTour();
@@ -278,12 +305,26 @@
       if (closeBtn) closeBtn.focus();
     }
 
-    function closeTour() {
+    function closeTour(fromHash) {
       tourModal.hidden = true;
       document.body.style.overflow = '';
       if (tourOpener) tourOpener.focus();
       tourOpener = null;
+      if (!fromHash) clearTourHash();
     }
+
+    /* link direto, voltar/avançar do navegador e links da página */
+    function syncTourFromHash() {
+      var key = tourFromHash();
+      if (key) {
+        if (tourModal.hidden || tourKey !== key) openTour(key, null, true);
+      } else if (!tourModal.hidden) {
+        closeTour(true);
+      }
+    }
+
+    window.addEventListener('hashchange', syncTourFromHash);
+    window.addEventListener('popstate', syncTourFromHash);
 
     document.addEventListener('click', function (e) {
       var trigger = e.target.closest ? e.target.closest('[data-tour]') : null;
@@ -305,6 +346,8 @@
     document.addEventListener('languagechange', function () {
       if (!tourModal.hidden && tourKey) renderTour();
     });
+
+    syncTourFromHash();
   }
 
   /* ---------- ano no rodapé ---------- */

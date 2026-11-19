@@ -14,6 +14,9 @@ JS e imagens), sem build e sem dependências.
 - **Catálogo raspado do site do cliente**: 10 fichas com preço, duração, nível,
   descrição, o que inclui / não inclui, o que levar e mínimo de pessoas. Cada card
   tem botão “Ver detalhes” que abre um painel com a ficha inteira.
+- **Link direto por passeio**: cada ficha tem endereço próprio
+  (`#passeio-morro`, `#passeio-boipeba`, `#passeio-rafting`…), que abre o painel já
+  naquele passeio. Serve para mandar o link de um passeio só para o cliente.
 - **6 idiomas**: português (padrão), inglês, hebraico (RTL), espanhol, francês e
   italiano — com pop-up de primeira visita e troca pelo header, menu mobile ou rodapé.
   Link direto por idioma: `?lang=en` (`pt`, `he`, `es`, `fr`, `it`).

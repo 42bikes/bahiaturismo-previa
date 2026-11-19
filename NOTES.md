@@ -71,6 +71,32 @@ mobile e no rodapé.
 - **Nomes traduzidos** nos 6 idiomas pelas chaves `tour.*.title` já existentes; o
   rótulo "Todos os passeios" usa `nav.toursAll`.
 
+## Endereço de cada ficha
+
+Cada passeio tem um endereço próprio, com o prefixo `#passeio-` e a mesma chave
+usada em `data-tour` e em `passeios-data.js`:
+
+| Passeio | Link |
+| --- | --- |
+| Morro de São Paulo | `#passeio-morro` |
+| Taipu de Fora | `#passeio-taipu` |
+| Boipeba | `#passeio-boipeba` |
+| Quatro Praias | `#passeio-quatro` |
+| Cachoeira da Usina | `#passeio-usina` |
+| Serra Grande | `#passeio-serra` |
+| Trilha da Prainha | `#passeio-prainha` |
+| Rio de Contas | `#passeio-rio` |
+| Rafting | `#passeio-rafting` |
+| Fazenda Vila Rosa | `#passeio-fazenda` |
+
+- Abrir o link direto abre o painel; fechar (X, fundo, `Escape`) tira o `#passeio-…`
+  da barra de endereço e volta ao endereço limpo.
+- O botão **voltar** do navegador fecha o painel em vez de sair da página.
+- Link com `?lang=en` continua funcionando junto: `?lang=en#passeio-boipeba`.
+- **A navbar não mudou**: os itens do menu "Passeios" seguem iguais (mesmo
+  `data-tour`, mesmo `href="#passeios"` como fallback sem JS); o clique abre a ficha
+  e agora também atualiza o endereço. No mobile, idem.
+
 ## Idiomas
 
 O site é multilíngue, sem build e sem dependências: os textos têm atributos
