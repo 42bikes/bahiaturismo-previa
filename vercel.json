@@ -2,6 +2,6 @@
   "outputDirectory": ".",
   "cleanUrls": true,
   "rewrites": [
-    { "source": "/p", "destination": "/proposta.html" }
+    { "source": "/p", "destination": "/proposta" }
   ]
 }
