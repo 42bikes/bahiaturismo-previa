@@ -129,7 +129,7 @@ O site é multilíngue, sem build e sem dependências: os textos têm atributos
 ## Antes de entregar
 
 - [ ] Revisar as traduções com falante nativo (principalmente hebraico)
-- [ ] Confirmar preços e temporada com a Keliane
+- [ ] Confirmar preços e temporada com o cliente
 - [ ] Confirmar direito de uso das fotos
 - [ ] Definir se o botão final aponta para o WhatsApp ou para o Mymento
 - [ ] Trocar a foto da fachada/loja se houver uma melhor
@@ -151,6 +151,6 @@ O site é multilíngue, sem build e sem dependências: os textos têm atributos
   listas) são cópia fiel do cliente em português e, fora do PT, aparecem com o
   aviso "descrição do catálogo da agência, em português".
 - **Avistamento das Baleias** não está nessa lista do cliente: o card continua
-  sem ficha e sem botão de detalhes até a Keliane confirmar temporada e preço.
+  sem ficha e sem botão de detalhes até o cliente confirmar temporada e preço.
 - Reproduzir: `python recon/passeios/parse.py` e depois
   `python recon/passeios/integrate.py` (idempotentes).

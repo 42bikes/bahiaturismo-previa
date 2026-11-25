@@ -774,3 +774,148 @@ html[dir="rtl"] .brand-word span{
   .tour-modal-foot{flex-direction:column;align-items:flex-start}
   .tour-modal-foot .btn{width:100%;justify-content:center}
 }
+
+/* ---------- mapa: onde a agência fica ---------- */
+
+.section-map{background:var(--cream)}
+.map-layout{
+  display:grid;grid-template-columns:minmax(0,1.08fr) minmax(0,.92fr);
+  gap:clamp(24px,3.4vw,44px);align-items:start;
+}
+.map-canvas{position:relative}
+.map-frame{
+  display:block;width:100%;aspect-ratio:4/3;
+  border:1px solid var(--sand);background:var(--sand);
+  filter:grayscale(.18) contrast(1.02);
+}
+.map-hint{margin-top:10px;font-size:11px;color:var(--ink-3)}
+
+.map-place{
+  display:flex;align-items:center;gap:14px;
+  padding:16px 18px;border:1px solid var(--sand);background:var(--paper);
+  text-decoration:none;color:inherit;
+  transition:border-color .25s ease,background .25s ease;
+}
+.map-place:hover{border-color:var(--sea);background:#fff}
+.map-pin{
+  display:grid;place-items:center;flex:none;
+  width:42px;height:42px;border-radius:50%;
+  background:rgba(31,95,160,.1);color:var(--sea);
+}
+.map-pin svg{width:21px;height:21px}
+.map-place-text{display:flex;flex-direction:column;gap:3px}
+.map-place-text strong{font-family:var(--sans);font-size:13.5px;font-weight:500;line-height:1.35}
+.map-place-open{
+  font-size:10px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--sea);border-bottom:1px solid rgba(31,95,160,.3);align-self:flex-start;padding-bottom:1px;
+}
+
+.map-facts{margin:22px 0 0;padding-top:18px;border-top:1px solid var(--sand)}
+.map-facts div{display:grid;grid-template-columns:132px minmax(0,1fr);gap:6px 14px;padding:6px 0}
+.map-facts dt{
+  font-size:10px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--ink-3);padding-top:2px;
+}
+.map-facts dd{margin:0;font-size:13.5px;color:var(--ink-2)}
+.map-facts dd strong{font-weight:600;color:var(--ink);font-size:15px}
+.map-facts a{color:var(--ink-2);text-decoration:none;border-bottom:1px solid var(--sand)}
+.map-facts a:hover{color:var(--sea);border-color:var(--sea)}
+
+.map-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.btn-ghost{border-color:var(--sand);color:var(--ink)}
+.btn-ghost:hover{border-color:var(--ink-3);background:var(--paper)}
+
+.map-dests{margin-top:26px;padding-top:20px;border-top:1px solid var(--sand)}
+.map-dests-label{
+  font-size:10px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--ink-3);margin-bottom:10px;
+}
+.map-dests-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(178px,1fr));gap:2px 6px}
+.map-dest{
+  display:flex;align-items:center;gap:9px;width:100%;
+  padding:7px 6px;margin:0;background:transparent;border:0;
+  color:var(--ink-2);font-family:var(--sans);font-size:12.5px;line-height:1.35;
+  text-align:start;cursor:pointer;
+  transition:background .2s ease,color .2s ease;
+}
+.map-dest:hover{background:rgba(31,95,160,.07);color:var(--ink)}
+.map-dest-pin{flex:none;width:16px;height:16px;color:var(--sea)}
+.map-dest-pin svg{width:16px;height:16px;display:block}
+.map-dests-hint{margin-top:12px;font-size:11px;color:var(--ink-3)}
+
+/* ---------- FAQ ---------- */
+
+.section-faq{background:var(--cream)}
+.faq-layout{
+  display:grid;grid-template-columns:minmax(0,.78fr) minmax(0,1.22fr);
+  gap:clamp(28px,5vw,64px);align-items:start;
+}
+.faq-head h2{font-size:clamp(1.85rem,3.1vw,2.7rem);line-height:1.1;text-wrap:balance}
+.faq-cta-text{margin:26px 0 14px;font-size:14px;color:var(--ink-2)}
+.faq-list{border-top:1px solid var(--sand)}
+.faq-item{border-bottom:1px solid var(--sand)}
+.faq-item summary{
+  display:flex;align-items:flex-start;justify-content:space-between;gap:20px;
+  padding:18px 2px;cursor:pointer;list-style:none;
+  font-family:var(--display);font-size:clamp(1rem,1.25vw,1.16rem);font-weight:400;line-height:1.35;
+  transition:color .2s ease;
+}
+.faq-item summary::-webkit-details-marker{display:none}
+.faq-item summary::after{
+  content:"+";flex:none;font-size:22px;font-weight:300;line-height:1;
+  color:var(--sea);transition:transform .25s ease;
+}
+.faq-item[open] summary::after{transform:rotate(45deg)}
+.faq-item summary:hover{color:var(--sea)}
+.faq-answer{padding:0 2px 20px;max-width:62ch}
+.faq-answer p{font-size:14px;line-height:1.7;color:var(--ink-2)}
+
+/* ---------- botão flutuante de WhatsApp ---------- */
+
+.wa-float{
+  position:fixed;inset-inline-end:20px;bottom:20px;z-index:60;
+  display:inline-flex;align-items:center;gap:11px;
+  padding:10px 18px 10px 11px;
+  background:var(--sea);color:#fff;text-decoration:none;
+  box-shadow:0 14px 34px rgba(12,36,49,.34);
+  transition:background .25s ease,transform .25s ease,box-shadow .25s ease;
+}
+.wa-float::after{
+  content:"";position:absolute;top:9px;inset-inline-end:10px;
+  width:7px;height:7px;border-radius:50%;background:var(--gold);
+  box-shadow:0 0 0 0 rgba(224,169,42,.7);
+  animation:wa-pulse 2.8s ease-out infinite;
+}
+.wa-float:hover{background:var(--sea-deep);color:#fff;transform:translateY(-2px)}
+.wa-float-icon{display:grid;place-items:center;flex:none;width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.15)}
+.wa-float-icon svg{width:22px;height:22px;display:block}
+.wa-float-text{display:flex;flex-direction:column;gap:2px;line-height:1.2}
+.wa-float-text strong{
+  font-family:var(--sans);font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;
+}
+.wa-float-text span{font-size:10px;letter-spacing:.05em;color:rgba(255,255,255,.78)}
+
+@keyframes wa-pulse{
+  0%{box-shadow:0 0 0 0 rgba(224,169,42,.7)}
+  70%{box-shadow:0 0 0 9px rgba(224,169,42,0)}
+  100%{box-shadow:0 0 0 0 rgba(224,169,42,0)}
+}
+
+@media (max-width:960px){
+  .map-layout,.faq-layout{grid-template-columns:1fr;gap:34px}
+  .map-facts div{grid-template-columns:120px minmax(0,1fr)}
+}
+
+@media (max-width:640px){
+  .map-frame{aspect-ratio:5/4}
+  .map-place{padding:14px 15px;gap:11px}
+  .map-actions .btn{flex:1 1 auto}
+  .map-dests-list{grid-template-columns:1fr 1fr;gap:2px}
+  .map-dest{font-size:12px;padding:7px 4px}
+  .faq-item summary{padding:16px 2px;gap:14px}
+  .wa-float{inset-inline-end:12px;bottom:max(12px, env(safe-area-inset-bottom));padding:8px 15px 8px 9px;gap:9px}
+  .wa-float-icon{width:34px;height:34px}
+  .wa-float-icon svg{width:19px;height:19px}
+  .wa-float-text strong{font-size:10px}
+  .site-footer{padding-bottom:78px}
+}

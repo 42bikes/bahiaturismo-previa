@@ -1,0 +1,732 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Proposta — Bahia Turismo</title>
+  <meta name="description" content="Apresentação da prévia do novo site da Bahia Turismo: catálogo de passeios e transfers, WhatsApp pronto e seis idiomas.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://bahiaturismo-previa.vercel.app/proposta">
+  <meta property="og:title" content="Prévia do novo site — Bahia Turismo">
+  <meta property="og:description" content="Apresentação interativa: o novo site, a integração com o Mymento e os benefícios para a temporada.">
+  <meta property="og:image" content="https://bahiaturismo-previa.vercel.app/assets/img/og-proposta.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Prévia do novo site da Bahia Turismo">
+  <meta property="og:locale" content="pt_BR">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="theme-color" content="#0c5454">
+  <link rel="icon" href="assets/img/icon.png" type="image/png" sizes="64x64">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Raleway:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --ink:#15191b;
+      --ink-2:#4b5155;
+      --muted:#7b8185;
+      --sea:#1f5fa0;
+      --teal:#0c5454;
+      --gold:#e0a92a;
+      --gold-deep:#8a6410;
+      --gold-soft:#f7e7bb;
+      --paper:#faf7f1;
+      --white:#fff;
+      --sand:#ded5c4;
+      --line:rgba(21,25,27,.12);
+      --line-strong:rgba(21,25,27,.22);
+      --serif:"Raleway",Georgia,serif;
+      --sans:"Montserrat",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+      --r-lg:18px;
+      --r-md:13px;
+      --r-sm:8px;
+      --shadow:0 10px 30px -14px rgba(21,25,27,.35);
+    }
+
+    *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+
+    html,body{
+      width:100%;min-height:100%;
+      background:var(--ink);
+      color:var(--ink);
+      font-family:var(--sans);
+      line-height:1.5;
+      overflow-x:hidden;
+      overscroll-behavior-y:none;
+    }
+
+    /* moldura de app: mesma sensação de stories do celular, até no desktop */
+    .app-viewport{
+      width:100%;max-width:480px;min-height:100vh;margin:0 auto;
+      background:var(--paper);
+      display:flex;flex-direction:column;position:relative;
+      box-shadow:0 0 70px rgba(0,0,0,.5);
+    }
+
+    .stories-header{
+      position:sticky;top:0;z-index:100;
+      padding:10px 14px;
+      background:rgba(21,25,27,.97);
+      -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
+      color:var(--gold-soft);
+    }
+    .story-progress-container{display:flex;gap:4px;width:100%;margin-bottom:9px}
+    .story-progress-bar{height:3px;flex:1;background:rgba(255,255,255,.24);border-radius:999px;overflow:hidden}
+    .story-progress-fill{width:0;height:100%;background:var(--gold);transition:width .25s ease}
+    .story-progress-bar.completed .story-progress-fill,
+    .story-progress-bar.active .story-progress-fill{width:100%}
+
+    .stories-meta-row{display:flex;align-items:center;justify-content:space-between;gap:10px}
+    .brand-pill{display:flex;align-items:center;gap:9px;font-size:.85rem;font-weight:600;letter-spacing:.02em}
+    .brand-mark{width:27px;height:27px;display:grid;place-items:center;border:1px solid rgba(194,160,90,.55);border-radius:50%;color:var(--gold)}
+    .brand-mark svg{width:17px;height:17px}
+    .mode-switch-btn{
+      background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.22);
+      color:var(--gold-soft);font-family:var(--sans);font-size:.71rem;font-weight:600;
+      padding:6px 11px;border-radius:999px;cursor:pointer;min-height:36px;
+    }
+    .mode-switch-btn:hover{border-color:var(--gold)}
+
+    .card-viewport{flex:1 0 auto;padding:16px 16px 96px;touch-action:pan-y}
+    .story-card{display:none;animation:cardIn .22s ease-out}
+    .story-card.active{display:block}
+    @keyframes cardIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+    body.scroll-mode .story-card{display:block!important;margin-bottom:26px;padding-bottom:26px;border-bottom:1px dashed var(--line-strong)}
+    body.scroll-mode .story-card:last-child{border-bottom:0}
+    body.scroll-mode .bottom-nav-bar .nav-touch-btn{display:none}
+    body.scroll-mode .bottom-nav-bar{justify-content:center}
+
+    .kicker{
+      display:inline-flex;align-items:center;gap:6px;
+      font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.12em;
+      color:var(--gold-deep);margin-bottom:7px;
+    }
+    .card-title{
+      font-family:var(--serif);font-size:1.66rem;line-height:1.18;
+      letter-spacing:-.01em;color:var(--ink);font-weight:600;margin-bottom:9px;
+    }
+    .card-subtitle{font-size:.89rem;color:var(--ink-2);line-height:1.55;margin-bottom:15px}
+    .card-note{font-size:.76rem;color:var(--muted);line-height:1.5}
+
+    .cover-card{
+      position:relative;overflow:hidden;
+      border-radius:var(--r-lg);padding:24px 20px;margin-bottom:13px;
+      color:var(--paper);
+      background:
+        linear-gradient(180deg,rgba(10,14,15,.62) 0%,rgba(10,14,15,.45) 40%,rgba(10,14,15,.92) 100%),
+        url("assets/img/hero-1.jpg") center/cover no-repeat;
+      border:1px solid rgba(255,255,255,.14);
+    }
+    .cover-tag{
+      display:inline-block;background:rgba(194,160,90,.22);color:var(--gold-soft);
+      border:1px solid rgba(194,160,90,.5);border-radius:999px;
+      padding:4px 11px;font-size:.7rem;font-weight:700;letter-spacing:.1em;
+      text-transform:uppercase;margin-bottom:13px;
+    }
+    .cover-card .card-title{color:var(--paper);font-size:1.82rem;margin-bottom:10px}
+    .cover-card .card-subtitle{color:rgba(250,247,240,.9)}
+    .cover-foot{
+      margin-top:14px;padding-top:11px;border-top:1px solid rgba(255,255,255,.2);
+      font-size:.76rem;color:rgba(250,247,240,.8);line-height:1.7;
+    }
+
+    .stat-row{display:flex;gap:8px;margin-bottom:13px}
+    .stat-item{
+      flex:1;background:var(--white);border:1px solid var(--line);
+      border-radius:var(--r-sm);padding:11px 7px;text-align:center;
+    }
+    .stat-val{font-family:var(--serif);font-size:1.45rem;font-weight:700;color:var(--gold-deep);line-height:1.1}
+    .stat-label{font-size:.7rem;color:var(--muted);margin-top:3px;line-height:1.3}
+
+    .touch-box{
+      background:var(--white);border:1px solid var(--line);
+      border-radius:var(--r-md);padding:15px;margin-bottom:11px;box-shadow:0 2px 8px rgba(21,25,27,.04);
+    }
+    .touch-box.highlight{border-color:var(--gold);background:#fffdf8}
+    .touch-box h3{font-size:.9rem;color:var(--ink);margin-bottom:5px;font-weight:700;line-height:1.35}
+    .touch-box h3 .ico{color:var(--gold-deep);margin-inline-end:5px}
+    .touch-box p{font-size:.8rem;color:var(--ink-2);line-height:1.5}
+    .touch-box.compact{padding:12px 14px}
+
+    .alert-chip{
+      background:#fffdf7;border-inline-start:3px solid var(--gold);
+      padding:9px 12px;border-radius:0 var(--r-sm) var(--r-sm) 0;
+      font-size:.79rem;color:var(--ink-2);margin-bottom:8px;line-height:1.45;
+    }
+    .alert-chip strong{display:block;color:var(--gold-deep);font-size:.8rem;margin-bottom:1px}
+
+    .benefit-list{display:flex;flex-direction:column;gap:8px;margin-bottom:11px}
+    .benefit-item{
+      display:flex;gap:11px;align-items:flex-start;
+      background:var(--white);border:1px solid var(--line);
+      border-radius:var(--r-md);padding:11px 12px;
+    }
+    .benefit-num{
+      flex:none;width:25px;height:25px;border-radius:50%;
+      background:var(--gold-soft);color:var(--gold-deep);
+      display:grid;place-items:center;font-size:.73rem;font-weight:700;
+    }
+    .benefit-item h3{font-size:.83rem;font-weight:700;line-height:1.3;margin-bottom:2px}
+    .benefit-item p{font-size:.74rem;color:var(--ink-2);line-height:1.45}
+
+    .tech-grid-2x2{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:12px}
+    .tech-mini-card{background:var(--white);border:1px solid var(--line);border-radius:var(--r-sm);padding:13px 11px}
+    .tech-mini-card .tag{display:block;font-size:.66rem;text-transform:uppercase;letter-spacing:.09em;color:var(--gold-deep);font-weight:700;margin-bottom:4px}
+    .tech-mini-card h4{font-size:.84rem;line-height:1.3;margin-bottom:3px;font-weight:700}
+    .tech-mini-card p{font-size:.73rem;color:var(--muted);line-height:1.4}
+
+    .mobile-preview-box{
+      background:#101416;border:1px solid rgba(255,255,255,.14);
+      border-radius:var(--r-lg);padding:11px;margin:13px 0;text-align:center;
+    }
+    .preview-phone-screen{width:100%;height:380px;border:0;border-radius:var(--r-md);background:#fff;display:block}
+    .tap-preview-link{
+      display:flex;align-items:center;justify-content:center;gap:7px;
+      background:var(--gold);color:var(--ink);font-weight:700;font-size:.85rem;
+      padding:13px;border-radius:10px;text-decoration:none;margin-top:10px;min-height:46px;
+    }
+    .tap-preview-link:hover{background:var(--gold-soft)}
+    .tap-preview-link.dark{background:var(--ink);color:var(--gold-soft);border:1px solid rgba(194,160,90,.4)}
+
+    .package-chip{
+      background:var(--white);border:1.5px solid var(--line-strong);
+      border-radius:var(--r-md);padding:15px;margin-bottom:11px;position:relative;cursor:pointer;
+      transition:border-color .2s ease,background .2s ease,box-shadow .2s ease;
+    }
+    .package-chip:hover{border-color:var(--gold)}
+    .package-chip.selected{border-color:var(--gold);background:#fffdf8;box-shadow:0 6px 18px -8px rgba(133,102,39,.4)}
+    .package-ribbon{
+      position:absolute;top:-10px;inset-inline-end:13px;background:var(--ink);color:var(--gold-soft);
+      font-size:.65rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+      padding:3px 9px;border-radius:999px;
+    }
+    .package-header{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:6px}
+    .package-name{font-weight:700;font-size:1rem;line-height:1.2}
+    .package-desc{font-size:.73rem;color:var(--muted);margin-top:2px}
+    .package-price{font-family:var(--serif);font-size:.85rem;font-weight:700;color:var(--gold-deep);white-space:nowrap;text-align:end}
+    .feature-list{list-style:none;font-size:.79rem;color:var(--ink-2);margin-top:8px}
+    .feature-list li{padding:3px 0;display:flex;align-items:flex-start;gap:7px;line-height:1.4}
+    .feature-list li::before{content:"✓";color:var(--gold-deep);font-weight:700}
+
+    .timeline-mobile{margin-top:10px}
+    .timeline-row{display:flex;gap:11px;align-items:flex-start;margin-bottom:11px}
+    .timeline-badge{
+      background:var(--gold-deep);color:#fff;font-size:.71rem;font-weight:700;
+      padding:5px 8px;border-radius:6px;min-width:48px;text-align:center;flex:none;
+    }
+    .timeline-badge.final{background:var(--ink);color:var(--gold-soft)}
+    .timeline-info h4{font-size:.86rem;margin-bottom:1px;font-weight:700;line-height:1.25}
+    .timeline-info p{font-size:.76rem;color:var(--muted);line-height:1.4}
+
+    .case-card{overflow:hidden;border:1.5px solid var(--line);border-radius:var(--r-md);padding:0;margin-top:12px;background:var(--white)}
+    .case-media{height:122px;background:var(--ink);overflow:hidden;position:relative}
+    .case-media img{width:100%;height:100%;object-fit:cover;opacity:.9;display:block}
+    .case-label{position:absolute;top:9px;inset-inline-start:10px;background:rgba(21,25,27,.88);color:var(--gold-soft);font-size:.66rem;padding:3px 8px;border-radius:6px}
+    .case-body{padding:12px 14px}
+    .case-body p{font-size:.77rem;color:var(--ink-2);line-height:1.45;margin-top:4px}
+    .case-body a{display:inline-flex;align-items:center;gap:5px;color:var(--gold-deep);font-weight:700;font-size:.8rem;text-decoration:none;margin-top:8px}
+
+    .bottom-nav-bar{
+      position:fixed;bottom:0;left:50%;transform:translateX(-50%);
+      width:100%;max-width:480px;height:72px;z-index:1000;
+      background:rgba(21,25,27,.97);
+      -webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);
+      border-top:1px solid rgba(255,255,255,.12);
+      display:flex;align-items:center;justify-content:space-between;gap:6px;padding:0 12px;
+    }
+    .nav-touch-btn{
+      height:48px;padding:0 15px;border:0;border-radius:999px;
+      font-family:var(--sans);font-size:.83rem;font-weight:600;
+      display:inline-flex;align-items:center;gap:5px;cursor:pointer;
+      transition:opacity .15s,transform .1s;
+    }
+    .nav-touch-btn:active{transform:scale(.97)}
+    .btn-prev{background:rgba(255,255,255,.12);color:var(--gold-soft)}
+    .btn-prev:disabled{opacity:.28;cursor:not-allowed}
+    .btn-next{background:var(--gold);color:var(--ink);font-weight:700}
+    .btn-site-peek{
+      color:var(--gold-soft);border:1px solid rgba(194,160,90,.4);background:rgba(194,160,90,.13);
+      height:44px;padding:0 10px;border-radius:999px;display:flex;align-items:center;gap:5px;
+      font-size:.71rem;font-weight:600;text-decoration:none;white-space:nowrap;
+    }
+
+    .interest-btn{
+      width:100%;min-height:52px;margin-top:14px;
+      background:linear-gradient(135deg,var(--ink) 0%,#3c4446 100%);
+      color:var(--gold-soft);font-family:var(--sans);font-size:.97rem;font-weight:700;
+      border:1px solid rgba(194,160,90,.5);border-radius:999px;
+      display:flex;align-items:center;justify-content:center;gap:8px;
+      text-decoration:none;cursor:pointer;
+    }
+    .interest-btn:active{transform:scale(.98)}
+    .interest-feedback{
+      display:none;background:#fffdf7;border:1px solid var(--gold);
+      border-radius:var(--r-md);padding:12px;margin-top:10px;text-align:center;
+    }
+    .interest-feedback strong{color:var(--gold-deep);font-size:.86rem}
+    .interest-feedback p{color:var(--muted);font-size:.76rem;margin-top:3px}
+
+    .balloons-overlay{position:fixed;inset:0;pointer-events:none;z-index:9999;overflow:hidden}
+    .floating-balloon{position:absolute;bottom:-60px;font-size:2rem;user-select:none;animation:floatUp 3.2s cubic-bezier(.25,.8,.25,1) forwards}
+    @keyframes floatUp{
+      0%{transform:translateY(0) rotate(0);opacity:0}
+      10%{opacity:1}85%{opacity:1}
+      100%{transform:translateY(-115vh) rotate(25deg);opacity:0}
+    }
+
+    .finish-modal{
+      display:none;position:fixed;inset:0;z-index:10000;
+      background:rgba(21,25,27,.9);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);
+      align-items:center;justify-content:center;padding:20px;
+    }
+    .finish-modal.active{display:flex;animation:fadeIn .25s ease-out}
+    @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+    .finish-modal-box{
+      background:var(--paper);border:1px solid var(--line);border-radius:var(--r-lg);
+      padding:28px 22px;max-width:380px;width:100%;text-align:center;box-shadow:0 24px 60px rgba(0,0,0,.5);
+    }
+    .finish-modal-box h3{font-family:var(--serif);font-size:1.55rem;margin:8px 0}
+    .finish-modal-box p{font-size:.84rem;color:var(--ink-2);line-height:1.5;margin-bottom:19px}
+    .finish-modal-actions{display:flex;flex-direction:column;gap:9px}
+    .finish-btn-primary{background:var(--gold);color:var(--ink);font-weight:700;padding:14px;border-radius:999px;text-decoration:none;font-size:.9rem;min-height:46px;display:grid;place-items:center}
+    .finish-btn-secondary{background:transparent;color:var(--ink);font-weight:600;padding:11px;border-radius:999px;border:1px solid var(--line-strong);text-decoration:none;font-size:.83rem;cursor:pointer;min-height:42px}
+    .finish-btn-secondary.plain{border:0;color:var(--muted)}
+
+    .swipe-hint{font-size:.72rem;color:var(--muted);text-align:center;margin-top:14px;display:flex;align-items:center;justify-content:center;gap:5px}
+
+    @media (max-width:380px){
+      .card-viewport{padding:13px 12px 94px}
+      .card-title{font-size:1.5rem}
+      .cover-card .card-title{font-size:1.62rem}
+      .bottom-nav-bar{padding:0 9px}
+      .nav-touch-btn{padding:0 11px;font-size:.78rem}
+      .btn-site-peek{font-size:.66rem;padding:0 8px}
+    }
+    @media (prefers-reduced-motion:reduce){
+      *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}
+    }
+  </style>
+</head>
+<body>
+
+<div class="app-viewport" id="viewport">
+
+  <header class="stories-header">
+    <div class="story-progress-container" id="progressBars" aria-hidden="true"></div>
+    <div class="stories-meta-row">
+      <div class="brand-pill">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 22c3-3 5.5-3 8.5 0s5.5 3 8.5 0 5.5-3 7 0"/><circle cx="22.5" cy="11" r="3" fill="currentColor" stroke="none"/></svg>
+        </span>
+        <span>Bahia Turismo · Itacaré</span>
+      </div>
+      <button class="mode-switch-btn" id="modeToggle" type="button" onclick="toggleScrollMode()">📜 Ver tudo</button>
+    </div>
+  </header>
+
+  <main class="card-viewport" id="cardViewport">
+
+    <!-- 1 · CAPA -->
+    <section class="story-card active" data-index="0">
+      <div class="cover-card">
+        <span class="cover-tag">Prévia para a Bahia Turismo</span>
+        <h1 class="card-title">Uma prévia do novo site da Bahia Turismo</h1>
+        <p class="card-subtitle">
+          Montei uma versão funcional da home para você ver como os passeios e transfers podem aparecer com mais clareza — e como cada clique pode chegar ao WhatsApp com a mensagem já escrita.
+        </p>
+        <div class="cover-foot">
+          📍 Itacaré · Bahia<br>
+          ✦ Preparado com os dados públicos da sua agência, sem compromisso
+        </div>
+      </div>
+
+      <div class="stat-row">
+        <div class="stat-item"><div class="stat-val">4,6★</div><div class="stat-label">125 avaliações no Google</div></div>
+        <div class="stat-item"><div class="stat-val">21</div><div class="stat-label">passeios e transfers</div></div>
+        <div class="stat-item"><div class="stat-val">6</div><div class="stat-label">idiomas na prévia</div></div>
+      </div>
+
+      <div class="touch-box compact">
+        <h3><span class="ico">✦</span>Por que preparei isso?</h3>
+        <p>O que vocês já construíram é sólido: Cadastur ativo, catálogo com preço e nota alta no Google. Só faltava uma vitrine que colocasse isso tudo para trabalhar a favor de quem está planejando a viagem.</p>
+      </div>
+
+      <div class="swipe-hint"><span>Deslize ou toque em <strong>Avançar</strong> →</span></div>
+    </section>
+
+    <!-- 2 · DIAGNÓSTICO -->
+    <section class="story-card" data-index="1">
+      <div class="kicker">01 · O que foi medido</div>
+      <h2 class="card-title">A operação já é boa. A vitrine é que não ajuda.</h2>
+      <p class="card-subtitle">Olhei o site atual com calma e separei o que aproveitar do que atrapalha. Nada de inventar problema:</p>
+
+      <div class="alert-chip"><strong>Meta description vazia</strong>O Google escolhe o resumo sozinho — e nem sempre escolhe bem.</div>
+      <div class="alert-chip"><strong>Telefone não clicável</strong>Zero links <code>tel:</code> num negócio que vende por telefone e WhatsApp.</div>
+      <div class="alert-chip"><strong>Hero ilegível</strong>Texto branco sobre areia clara: a chamada some na primeira tela.</div>
+      <div class="alert-chip"><strong>Popup sobre o hero</strong>A primeira coisa que o visitante vê é um modal "Black November", não a agência.</div>
+
+      <div class="touch-box highlight">
+        <h3><span class="ico">✓</span>O que fica e ganha destaque</h3>
+        <p>Cadastur ativo, JSON-LD de agência de viagens bem montado, blog e área do cliente no ar, 11 passeios e 10 transfers com preço real. Isso é material pronto — a página nova só organiza e mostra.</p>
+      </div>
+    </section>
+
+    <!-- 3 · MUDANÇAS -->
+    <section class="story-card" data-index="2">
+      <div class="kicker">02 · Como funciona na prática</div>
+      <h2 class="card-title">Três mudanças que o visitante sente de cara</h2>
+      <p class="card-subtitle">Sem promessa de tecnologia mirabolante: organizar o que já existe e tirar as barreiras entre a pergunta e a reserva.</p>
+
+      <div class="touch-box">
+        <h3><span class="ico">1</span>Catálogo que se encontra</h3>
+        <p>Passeios por destino, com filtro, duração e preço à vista. Ilhéus, Morro de São Paulo, Boipeba e Chapada Diamantina deixam de ficar escondidos no menu.</p>
+      </div>
+      <div class="touch-box">
+        <h3><span class="ico">2</span>WhatsApp que já vende</h3>
+        <p>O botão de cada passeio abre uma conversa com o nome do passeio, o preço e o número de pessoas escritos. Quem chega já sabe o que quer — e vocês respondem menos o básico.</p>
+      </div>
+      <div class="touch-box">
+        <h3><span class="ico">3</span>Do turista de fora</h3>
+        <p>Seis idiomas: português, inglês, hebraico, espanhol, francês e italiano. Bandeiras na seleção, hebraico da direita para a esquerda e a escolha lembrada na próxima visita.</p>
+      </div>
+
+      <div class="touch-box compact highlight">
+        <p><strong>Sem checkout novo:</strong> a prévia usa WhatsApp. Se preferirem, os mesmos botões podem apontar para o Mymento de vocês — a decisão é sua.</p>
+      </div>
+    </section>
+
+    <!-- 4 · PRÉVIA AO VIVO -->
+    <section class="story-card" data-index="3">
+      <div class="kicker">03 · O protótipo pronto</div>
+      <h2 class="card-title">A prévia já está no ar — abra no seu celular</h2>
+      <p class="card-subtitle">Navegue aqui mesmo ou em tela cheia. Pode testar os idiomas, o filtro e os botões de WhatsApp.</p>
+
+      <div class="mobile-preview-box">
+        <iframe class="preview-phone-screen" src="./index.html?lang=pt" title="Prévia da home da Bahia Turismo" loading="lazy"></iframe>
+        <a class="tap-preview-link" href="./index.html" target="_blank" rel="noopener">Ver site em tela cheia ↗</a>
+      </div>
+
+      <p class="card-note">Os preços vêm do catálogo público, conferidos em 18/11/2026. Antes de publicar, confirmamos temporada e direito de uso das fotos.</p>
+    </section>
+
+    <!-- 5 · PARTE TÉCNICA -->
+    <section class="story-card" data-index="4">
+      <div class="kicker">04 · Nos bastidores</div>
+      <h2 class="card-title">A parte chata já fica resolvida</h2>
+      <p class="card-subtitle">Vocês não precisam contratar provedor, contratar desenvolvedor de plantão ou aprender painel novo.</p>
+
+      <div class="tech-grid-2x2">
+        <div class="tech-mini-card"><span class="tag">Busca</span><h4>Título e descrição</h4><p>Meta description e Open Graph preenchidos; JSON-LD mantido.</p></div>
+        <div class="tech-mini-card"><span class="tag">Velocidade</span><h4>Sem framework</h4><p>HTML e CSS puros, sem build, sem bibliotecas para carregar.</p></div>
+        <div class="tech-mini-card"><span class="tag">Celular</span><h4>Testado em 3 telas</h4><p>1440, 768 e 390 px: sem rolagem lateral e sem links pequenos.</p></div>
+        <div class="tech-mini-card"><span class="tag">Confiança</span><h4>4,6 no Google</h4><p>Cadastur e avaliações reais aparecem como prova, não como texto inventado.</p></div>
+      </div>
+
+      <div class="touch-box compact">
+        <h3><span class="ico">✦</span>Depois de aprovado</h3>
+        <p>Publicação no endereço oficial, com cadeado SSL e ajuste da ficha no Google Meu Negócio. Nenhuma mensalidade obrigatória para manter a página no ar.</p>
+      </div>
+    </section>
+
+    <!-- 6 · INTEGRAÇÃO COM O SISTEMA ATUAL -->
+    <section class="story-card" data-index="5">
+      <div class="kicker">05 · No sistema de vocês</div>
+      <h2 class="card-title">A nova página entra na frente do Mymento — não no lugar dele</h2>
+      <p class="card-subtitle">Reserva, Pix e PayPal continuam no sistema que vocês já usam. A prévia só cuida da vitrine e leva o visitante até a reserva com menos dúvida.</p>
+
+      <div class="tech-grid-2x2">
+        <div class="tech-mini-card"><span class="tag">Catálogo</span><h4>21 produtos</h4><p>Os 11 passeios e 10 transfers do Mymento viram cards com filtro, duração e preço.</p></div>
+        <div class="tech-mini-card"><span class="tag">Reserva</span><h4>Checkout atual</h4><p>Os botões podem abrir a ficha de cada passeio no Mymento; Pix e PayPal seguem com vocês.</p></div>
+        <div class="tech-mini-card"><span class="tag">Contato</span><h4>WhatsApp</h4><p>Ou, se preferirem, a conversa já chega com passeio, valor e número de pessoas escritos.</p></div>
+        <div class="tech-mini-card"><span class="tag">Confiança</span><h4>Google e Cadastur</h4><p>JSON-LD, QR da Cadastur, blog e área do cliente são mantidos e linkados na home.</p></div>
+      </div>
+
+      <div class="touch-box highlight">
+        <h3><span class="ico">✦</span>O que muda na rotina</h3>
+        <p>Nenhuma migração e nenhum painel novo: vocês seguem vendendo no Mymento. Só a entrada muda — em vez de um menu com 21 itens escondidos, o visitante vê destinos e preços na primeira tela.</p>
+      </div>
+
+      <div class="touch-box compact">
+        <p><strong>Por passeio:</strong> cada card pode apontar para o checkout ou para o WhatsApp. A escolha fica com vocês e é ajustada no briefing.</p>
+      </div>
+    </section>
+
+    <!-- 7 · BENEFÍCIOS EM TEMPORADA -->
+    <section class="story-card" data-index="6">
+      <div class="kicker">06 · Enquanto a temporada acontece</div>
+      <h2 class="card-title">Quatro benefícios que valem já nesta temporada</h2>
+      <p class="card-subtitle">Não são promessas de faturamento: são pontos de atrito que a página nova tira do caminho de quem está decidindo agora.</p>
+
+      <div class="benefit-list">
+        <div class="benefit-item"><span class="benefit-num">1</span><div><h3>WhatsApp com contexto</h3><p>Em vez de "quanto custa?", a mensagem chega com passeio, valor e número de pessoas. O atendimento das 8h às 22h começa com a pergunta já respondida.</p></div></div>
+        <div class="benefit-item"><span class="benefit-num">2</span><div><h3>21 opções achadas rápido</h3><p>Morro de São Paulo, Boipeba e Ilhéus hoje ficam dentro de menu. Com filtro por destino e preço à vista, o turista encontra em segundos o que procura.</p></div></div>
+        <div class="benefit-item"><span class="benefit-num">3</span><div><h3>Turista de fora entende a oferta</h3><p>Seis idiomas, bandeiras na seleção e hebraico da direita para a esquerda. Quem não fala português consegue escolher sem depender de tradução.</p></div></div>
+        <div class="benefit-item"><span class="benefit-num">4</span><div><h3>Confiança na primeira tela</h3><p>4,6★ em 125 avaliações e Cadastur ativo aparecem antes da dúvida — no lugar do popup que hoje cobre o hero.</p></div></div>
+      </div>
+
+      <div class="touch-box compact highlight">
+        <p><strong>E sem mudar o sistema:</strong> a temporada segue rodando no Mymento. A página nova só faz o visitante chegar melhor informado ao checkout ou ao WhatsApp.</p>
+      </div>
+
+      <p class="card-note">Preços e datas da temporada precisam da sua confirmação antes de publicar; a prévia usa os valores do catálogo público de 18/11/2026.</p>
+    </section>
+
+    <!-- 8 · ESCOPO -->
+    <section class="story-card" data-index="7">
+      <div class="kicker">07 · Escopo e investimento</div>
+      <h2 class="card-title">Escolha o tamanho da primeira entrega</h2>
+      <p class="card-subtitle">Toque numa opção para ver o que entra. Os valores são apresentados separadamente, conforme o escopo escolhido.</p>
+
+      <div class="package-chip" id="pkg1" onclick="selectPackage(1)">
+        <div class="package-header">
+          <div><div class="package-name">Vitrine + WhatsApp</div><div class="package-desc">O que você já está vendo na prévia</div></div>
+          <div class="package-price">a combinar</div>
+        </div>
+        <ul class="feature-list">
+          <li>11 passeios e 10 transfers com filtro</li>
+          <li>Botões que abrem o WhatsApp com a mensagem pronta</li>
+          <li>Título, descrição e marca dourada da agência</li>
+          <li>Responsivo e testado no celular</li>
+        </ul>
+      </div>
+
+      <div class="package-chip selected" id="pkg2" onclick="selectPackage(2)">
+        <span class="package-ribbon">Recomendado</span>
+        <div class="package-header">
+          <div><div class="package-name">Publicação + idiomas</div><div class="package-desc">Pronto para receber turista de fora</div></div>
+          <div class="package-price">a combinar</div>
+        </div>
+        <ul class="feature-list">
+          <li><strong>Tudo do escopo anterior</strong></li>
+          <li>Seis idiomas com bandeiras e hebraico em RTL</li>
+          <li>Publicação no domínio e ajuste no Google Meu Negócio</li>
+          <li>Revisão final com vocês, no celular</li>
+          <li>Acompanhamento após o lançamento</li>
+        </ul>
+      </div>
+
+      <div class="package-chip" id="pkg3" onclick="selectPackage(3)">
+        <div class="package-header">
+          <div><div class="package-name">Vitrine + Mymento</div><div class="package-desc">Mantém o checkout que vocês já usam</div></div>
+          <div class="package-price">a combinar</div>
+        </div>
+        <ul class="feature-list">
+          <li>Mesmo catálogo e mesma navegação</li>
+          <li>Botões de reserva apontando para o checkout atual</li>
+          <li>Pix e PayPal seguem com o sistema de vocês</li>
+        </ul>
+      </div>
+
+      <p class="card-note">Condições de pagamento e prazo apresentados junto com o orçamento.</p>
+    </section>
+
+    <!-- 9 · QUEM ASSINA -->
+    <section class="story-card" data-index="8">
+      <div class="kicker">08 · Quem assina o projeto</div>
+      <h2 class="card-title">Arthur Horyu — tecnologia e imagem a serviço do turismo</h2>
+      <p class="card-subtitle">Trabalho com desenvolvimento, design e imagem para negócios locais que vivem de gente chegando de fora.</p>
+
+      <div class="touch-box compact">
+        <p><strong>Contato direto:</strong> você fala com quem monta a página, sem agência no meio.</p>
+      </div>
+      <div class="touch-box compact">
+        <p><strong>Olhar de turismo:</strong> já desenvolvi o site do Recanto Ponte de Pedra, atrativo turístico e gastronômico da região.</p>
+      </div>
+      <div class="touch-box compact">
+        <p><strong>Tecnologia leve:</strong> página rápida, sem mensalidade de plataforma e sem comissão por reserva.</p>
+      </div>
+
+      <div class="case-card">
+        <div class="case-media"><img src="assets/img/hero-1.jpg" alt="Vista de Itacaré">
+          <span class="case-label">bahia turismo · prévia</span>
+        </div>
+        <div class="case-body">
+          <strong>Aqui mesmo, em Itacaré</strong>
+          <p>A prévia foi montada com fotos e dados do próprio catálogo da Bahia Turismo — não é um modelo genérico trocado pelo nome da agência.</p>
+        </div>
+      </div>
+
+      <a class="tap-preview-link dark" href="https://horyu-arthur.vercel.app/" target="_blank" rel="noopener">Ver portfólio completo ↗</a>
+    </section>
+
+    <!-- 10 · PRAZO E FECHAMENTO -->
+    <section class="story-card" data-index="9">
+      <div class="kicker">09 · Como chegamos no ar</div>
+      <h2 class="card-title">Cinco dias, sem mexer na rotina de vocês</h2>
+      <p class="card-subtitle">O passo a passo depende só de uma confirmação sua de preços e fotos.</p>
+
+      <div class="timeline-mobile">
+        <div class="timeline-row"><div class="timeline-badge">Dia 1</div><div class="timeline-info"><h4>Briefing e conferência</h4><p>Preços da temporada, fotos permitidas e idiomas prioritários.</p></div></div>
+        <div class="timeline-row"><div class="timeline-badge">Dia 2</div><div class="timeline-info"><h4>Catálogo e textos</h4><p>Passeios, transfers e WhatsApp com as mensagens certas.</p></div></div>
+        <div class="timeline-row"><div class="timeline-badge">Dia 3</div><div class="timeline-info"><h4>Idiomas e busca</h4><p>Seis línguas, título, descrição e ficha no Google ajustados.</p></div></div>
+        <div class="timeline-row"><div class="timeline-badge">Dia 4</div><div class="timeline-info"><h4>Revisão com vocês</h4><p>Vocês testam no celular e pedem qualquer ajuste.</p></div></div>
+        <div class="timeline-row"><div class="timeline-badge final">Dia 5</div><div class="timeline-info"><h4>Publicação 🚀</h4><p>Endereço oficial no ar, pronto para a temporada.</p></div></div>
+      </div>
+
+      <div class="touch-box compact highlight">
+        <p><strong>Obrigado pela atenção!</strong> Se fizer sentido, a gente conversa com calma e ajusta o que vocês acharem necessário.</p>
+      </div>
+
+      <a class="interest-btn" id="btnInterest" href="https://wa.me/5573998429935?text=Oi%21%20Vi%20a%20pr%C3%A9via%20do%20site%20da%20Bahia%20Turismo%20e%20quero%20conversar." target="_blank" rel="noopener" onclick="celebrateInterest()">🎈 Gostei, vamos conversar!</a>
+      <div class="interest-feedback" id="interestFeedback"><strong>Que bom! A conversa abre no WhatsApp.</strong><p>Se preferir, ligue: (73) 99842-9935.</p></div>
+    </section>
+
+  </main>
+
+  <div class="finish-modal" id="finishModal" role="dialog" aria-modal="true" aria-labelledby="finishTitle">
+    <div class="finish-modal-box">
+      <div style="font-size:2rem;line-height:1">✦</div>
+      <h3 id="finishTitle">Obrigado!</h3>
+      <p>Foi um prazer preparar essa prévia para a Bahia Turismo. Se quiser, revisited o site ou voltamos do começo da apresentação.</p>
+      <div class="finish-modal-actions">
+        <a class="finish-btn-primary" href="./index.html" target="_blank" rel="noopener">Ver site em tela cheia ↗</a>
+        <button class="finish-btn-secondary" type="button" onclick="restartPresentation()">Rever a apresentação</button>
+        <button class="finish-btn-secondary plain" type="button" onclick="closeFinishModal()">Fechar</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="balloons-overlay" id="balloonsContainer" aria-hidden="true"></div>
+
+  <nav class="bottom-nav-bar" aria-label="Navegação da apresentação">
+    <button class="nav-touch-btn btn-prev" id="btnPrev" type="button" onclick="prevCard()" disabled>← Voltar</button>
+    <a class="btn-site-peek" href="./index.html" target="_blank" rel="noopener">Ver prévia ↗</a>
+    <button class="nav-touch-btn btn-next" id="btnNext" type="button" onclick="nextCard()">Avançar →</button>
+  </nav>
+
+</div>
+
+<script>
+  (function () {
+    var currentIndex = 0;
+    var isScrollMode = false;
+    var cards = document.querySelectorAll(".story-card");
+    var totalCards = cards.length;
+    var barsHost = document.getElementById("progressBars");
+    for (var b = 0; b < totalCards; b++) {
+      var bar = document.createElement("div");
+      bar.className = "story-progress-bar";
+      var fill = document.createElement("div");
+      fill.className = "story-progress-fill";
+      bar.appendChild(fill);
+      barsHost.appendChild(bar);
+    }
+    var bars = barsHost.querySelectorAll(".story-progress-bar");
+    var btnPrev = document.getElementById("btnPrev");
+    var btnNext = document.getElementById("btnNext");
+    var modeBtn = document.getElementById("modeToggle");
+    var viewport = document.getElementById("cardViewport");
+    var modal = document.getElementById("finishModal");
+
+    function showCard(index) {
+      if (isScrollMode) return;
+      currentIndex = Math.max(0, Math.min(index, totalCards - 1));
+      Array.prototype.forEach.call(cards, function (card, i) {
+        card.classList.toggle("active", i === currentIndex);
+      });
+      Array.prototype.forEach.call(bars, function (bar, i) {
+        bar.classList.toggle("completed", i < currentIndex);
+        bar.classList.toggle("active", i === currentIndex);
+      });
+      btnPrev.disabled = currentIndex === 0;
+      btnNext.textContent = currentIndex === totalCards - 1 ? "Finalizar ✓" : "Avançar →";
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function nextCard() {
+      if (currentIndex < totalCards - 1) showCard(currentIndex + 1);
+      else openFinishModal();
+    }
+
+    function prevCard() {
+      if (currentIndex > 0) showCard(currentIndex - 1);
+    }
+
+    function openFinishModal() {
+      celebrate();
+      modal.classList.add("active");
+      modal.querySelector(".finish-btn-secondary").focus();
+    }
+
+    function closeFinishModal() { modal.classList.remove("active"); }
+
+    function restartPresentation() {
+      closeFinishModal();
+      showCard(0);
+    }
+
+    function celebrateInterest() {
+      document.getElementById("interestFeedback").style.display = "block";
+      celebrate();
+    }
+
+    function celebrate() {
+      var container = document.getElementById("balloonsContainer");
+      var emojis = ["🎈", "✦", "🌴", "🎉", "🐋", "✨", "🎈"];
+      for (var i = 0; i < 20; i++) {
+        var b = document.createElement("div");
+        b.className = "floating-balloon";
+        b.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+        b.style.left = (Math.random() * 88 + 4) + "vw";
+        b.style.animationDuration = (2.2 + Math.random() * 1.6) + "s";
+        b.style.animationDelay = (Math.random() * 0.5) + "s";
+        container.appendChild(b);
+        (function (node) { window.setTimeout(function () { node.remove(); }, 4400); })(b);
+      }
+    }
+
+    function toggleScrollMode() {
+      isScrollMode = !isScrollMode;
+      document.body.classList.toggle("scroll-mode", isScrollMode);
+      modeBtn.textContent = isScrollMode ? "📱 Modo stories" : "📜 Ver tudo";
+      if (!isScrollMode) showCard(currentIndex);
+    }
+
+    function selectPackage(num) {
+      for (var i = 1; i <= 3; i++) {
+        var chip = document.getElementById("pkg" + i);
+        if (chip) chip.classList.toggle("selected", i === num);
+      }
+    }
+
+    var startX = 0, startY = 0;
+    viewport.addEventListener("touchstart", function (e) {
+      startX = e.changedTouches[0].screenX;
+      startY = e.changedTouches[0].screenY;
+    }, { passive: true });
+    viewport.addEventListener("touchend", function (e) {
+      if (isScrollMode || modal.classList.contains("active")) return;
+      var dx = e.changedTouches[0].screenX - startX;
+      var dy = e.changedTouches[0].screenY - startY;
+      if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy) * 1.4) {
+        if (dx < 0) nextCard(); else prevCard();
+      }
+    }, { passive: true });
+
+    window.addEventListener("keydown", function (e) {
+      if (modal.classList.contains("active")) {
+        if (e.key === "Escape") closeFinishModal();
+        return;
+      }
+      if (isScrollMode) return;
+      if (e.target && /^(INPUT|TEXTAREA|IFRAME)$/.test(e.target.tagName)) return;
+      if (e.key === "ArrowRight") nextCard();
+      else if (e.key === "ArrowLeft") prevCard();
+    });
+
+    modal.addEventListener("click", function (e) { if (e.target === modal) closeFinishModal(); });
+
+    window.nextCard = nextCard;
+    window.prevCard = prevCard;
+    window.toggleScrollMode = toggleScrollMode;
+    window.selectPackage = selectPackage;
+    window.celebrateInterest = celebrateInterest;
+    window.restartPresentation = restartPresentation;
+    window.closeFinishModal = closeFinishModal;
+
+    showCard(0);
+  })();
+</script>
+</body>
+</html>

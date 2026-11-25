@@ -23,6 +23,11 @@ JS e imagens), sem build e sem dependências.
 - **Reserva por WhatsApp**: todo CTA abre o WhatsApp da agência com passeio, preço e
   número de pessoas já escritos na mensagem. O checkout do Mymento **não** foi
   reimplementado nesta prévia.
+- **Apresentação comercial**: `proposta.html`, no formato stories do Camping Cactus,
+  com 10 cards, integração com o Mymento, benefícios em temporada e iframe da home.
+  Publicada em `/proposta`, com atalho curto em `/p`.
+- **Preview no WhatsApp**: capa 1200×630 em `assets/img/og-proposta.jpg`, `og:url`,
+  `og:title`, `og:description` e `twitter:card` absolutos nas duas páginas.
 - **Acessibilidade e SEO básicos**: um `h1`, foco preso no painel do passeio, `Escape`
   fecha, `tel:` clicável, meta description, Open Graph e JSON-LD de `TravelAgency`.
 
